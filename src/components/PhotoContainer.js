@@ -4,10 +4,20 @@ import NotFound from './NotFound'
 
 class PhotoContainer extends Component {
   render(){
+    const results = this.props.data;
+    let photos = results.map(photo =>
+      <Photo
+        url={`https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_m.jpg`}
+        key={photo.id}
+      />
+    )
+
     return(
       <div className="photo-container">
         <h2>Results</h2>
-        <Photo />
+        <ul>
+          {photos}
+        </ul>
         <NotFound />
       </div>
     )
