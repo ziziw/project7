@@ -6,7 +6,8 @@ import PhotoContainer from './components/PhotoContainer'
 import {
   BrowserRouter,
   Route,
-  Switch
+  Switch,
+  Redirect
 } from 'react-router-dom';
 
 import apiKey from './config'
@@ -72,8 +73,8 @@ class App extends Component {
             <Route path='/sunsets' render={ () => <PhotoContainer data={this.state.sunsetsPhotos}/>}/>
             <Route path='/waterfalls' render={ () => <PhotoContainer data={this.state.waterfallsPhotos}/>}/>
             <Route path='/mountains' render={ () => <PhotoContainer data={this.state.mountainsPhotos}/>}/>
-            <Route path='/search/:query' render={ () => <PhotoContainer data={this.state.photos}/>}/>
           </Switch>
+          <Route path='/search/:query' render={ () => <PhotoContainer data={this.state.photos}/>}/>
         </div>
       </BrowserRouter>
     );
