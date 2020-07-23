@@ -14,9 +14,20 @@ class PhotoContainer extends Component {
       />
     )
 
+    let word = 'Sunsets';
+    let pathname = this.props.location.pathname;
+
+    if (pathname !== '/'){
+      if (pathname.includes('/search')){
+        word = pathname.substring(8);
+      } else {
+        word = pathname.substring(1);
+      }
+    }
+
     return(
       <div className="photo-container">
-        <h2>Results</h2>
+        <h2>Images Of: {word}</h2>
         <ul>
           {photos}
         </ul>
