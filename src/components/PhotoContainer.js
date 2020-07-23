@@ -3,6 +3,7 @@ import Photo from './Photo'
 import NotFound from './NotFound'
 
 class PhotoContainer extends Component {
+
   render(){
     const results = this.props.data;
     let photos = results.map(photo =>

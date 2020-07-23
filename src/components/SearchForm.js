@@ -5,8 +5,22 @@ class SearchForm extends Component{
 
   constructor(){
     super();
+
     this.state = {
-      searchText: ''
+      searchText: '',
+      searchTerm: ''
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    let pathName = this.props.location.pathname;
+    let searchTerm;
+
+    if (pathName.includes('/search')){
+      searchTerm = pathName.substring(8);
+      if (prevState.searchTerm !== searchTerm){
+        this.setState({ searchTerm: searchTerm})
+      }
     }
   }
 
@@ -16,10 +30,11 @@ class SearchForm extends Component{
 
   handleSubmit = event => {
     event.preventDefault();
-    this.props.onSearch(this.query.value);
 
-    /*let path = `search\\${this.query.value}`;
-    this.props.history.push(path);*/
+    let path = `search\\${this.query.value}`;
+    this.props.history.push(path);
+
+    this.props.onSearch(this.query.value);
 
     event.currentTarget.reset();
   }

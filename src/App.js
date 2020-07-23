@@ -6,8 +6,7 @@ import PhotoContainer from './components/PhotoContainer'
 import {
   BrowserRouter,
   Route,
-  Switch,
-  Redirect
+  Switch
 } from 'react-router-dom';
 
 import apiKey from './config'
@@ -26,10 +25,6 @@ class App extends Component {
 
   componentDidMount(){
     this.requestAll()
-  }
-
-  componentDidUpdate(){
-    this.performSearch()
   }
 
   requestAll = () => {
@@ -66,15 +61,15 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div className="App">
-          <SearchForm onSearch={this.performSearch} history={this.props.history}/>
+          <SearchForm onSearch={this.performSearch}/>
           <Nav />
           <Switch>
             <Route exact path='/' render={ () => <PhotoContainer data={this.state.sunsetsPhotos}/>}/>
             <Route path='/sunsets' render={ () => <PhotoContainer data={this.state.sunsetsPhotos}/>}/>
             <Route path='/waterfalls' render={ () => <PhotoContainer data={this.state.waterfallsPhotos}/>}/>
             <Route path='/mountains' render={ () => <PhotoContainer data={this.state.mountainsPhotos}/>}/>
+            <Route path='/search/:query' render={ () => <PhotoContainer data={this.state.photos}/>}/>
           </Switch>
-          <Route path='/search/:query' render={ () => <PhotoContainer data={this.state.photos}/>}/>
         </div>
       </BrowserRouter>
     );
