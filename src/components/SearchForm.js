@@ -7,8 +7,7 @@ class SearchForm extends Component{
     super();
 
     this.state = {
-      searchText: '',
-      searchTerm: ''
+      searchText: ''
     }
   }
 
@@ -48,7 +47,6 @@ class SearchForm extends Component{
         </button>
       </form>
     )
-
   }
 }
 

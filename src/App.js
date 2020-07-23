@@ -3,6 +3,7 @@ import './App.css';
 import SearchForm from './components/SearchForm'
 import Nav from './components/Nav'
 import PhotoContainer from './components/PhotoContainer'
+import Error from './components/Error'
 import {
   Route,
   Switch,
@@ -20,7 +21,8 @@ class App extends Component {
       sunsetsPhotos: [],
       waterfallsPhotos: [],
       mountainsPhotos: [],
-      searchTerm: ''
+      searchTerm: '',
+      loading: true
     }
   }
 
@@ -65,11 +67,16 @@ class App extends Component {
     fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${key}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
       .then(res => res.json())
       .then(resData => {
-        this.setState({ photos: resData.photos.photo })
+        this.setState({
+          photos: resData.photos.photo,
+          loading: false
+        })
       })
       .catch(error => {
         console.log('Error fetching and parsing data', error)
-      })
+      }
+    )
+    this.setState({ loading: true })
   }
 
   render(){
@@ -78,11 +85,12 @@ class App extends Component {
         <SearchForm onSearch={this.performSearch}/>
         <Nav />
         <Switch>
-          <Route exact path='/' render={ () => <PhotoContainer data={this.state.sunsetsPhotos}/>}/>
-          <Route path='/sunsets' render={ () => <PhotoContainer data={this.state.sunsetsPhotos}/>}/>
+          <Route exact path='/' render={ () => <PhotoContainer data={this.state.sunsetsPhotos} />}/>
+          <Route path='/sunsets' render={ () => <PhotoContainer data={this.state.sunsetsPhotos} />}/>
           <Route path='/waterfalls' render={ () => <PhotoContainer data={this.state.waterfallsPhotos}/>}/>
-          <Route path='/mountains' render={ () => <PhotoContainer data={this.state.mountainsPhotos}/>}/>
-          <Route path='/search/:query' render={ () => <PhotoContainer data={this.state.photos} onSearch={this.performSearch}/>}/>
+          <Route path='/mountains' render={ () => <PhotoContainer data={this.state.mountainsPhotos} />}/>
+          <Route path='/search/:query' render={ () => <PhotoContainer data={this.state.photos} onSearch={this.performSearch} loadingState={this.state.loading}/>}/>
+          <Route component={Error}/>
         </Switch>
       </div>
     );
