@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import Photo from './Photo'
-import NotFound from './NotFound'
+import Photo from './Photo';
+import NotFound from './NotFound';
+import { withRouter } from 'react-router-dom';
 
 class PhotoContainer extends Component {
 
@@ -25,4 +26,4 @@ class PhotoContainer extends Component {
   }
 }
 
-export default PhotoContainer;
+export default withRouter(PhotoContainer);

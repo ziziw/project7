@@ -12,18 +12,6 @@ class SearchForm extends Component{
     }
   }
 
-  componentDidUpdate(prevProps, prevState){
-    let pathName = this.props.location.pathname;
-    let searchTerm;
-
-    if (pathName.includes('/search')){
-      searchTerm = pathName.substring(8);
-      if (prevState.searchTerm !== searchTerm){
-        this.setState({ searchTerm: searchTerm})
-      }
-    }
-  }
-
   onSearchChange = event => {
     this.setState({ searchText: event.target.value })
   }

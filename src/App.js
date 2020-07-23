@@ -4,9 +4,9 @@ import SearchForm from './components/SearchForm'
 import Nav from './components/Nav'
 import PhotoContainer from './components/PhotoContainer'
 import {
-  BrowserRouter,
   Route,
-  Switch
+  Switch,
+  withRouter
 } from 'react-router-dom';
 
 import apiKey from './config'
@@ -19,12 +19,27 @@ class App extends Component {
       photos: [],
       sunsetsPhotos: [],
       waterfallsPhotos: [],
-      mountainsPhotos: []
+      mountainsPhotos: [],
+      searchTerm: ''
     }
   }
 
   componentDidMount(){
     this.requestAll()
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    let prevPathname = prevProps.location.pathname;
+    let pathname = this.props.location.pathname;
+    let searchTerm;
+
+    if (pathname.includes('/search')){
+      searchTerm = pathname.substring(8);
+      if (prevPathname !== pathname){
+        this.setState({ searchTerm: searchTerm});
+        this.performSearch(searchTerm);
+      }
+    }
   }
 
   requestAll = () => {
@@ -59,21 +74,19 @@ class App extends Component {
 
   render(){
     return (
-      <BrowserRouter>
-        <div className="App">
-          <SearchForm onSearch={this.performSearch}/>
-          <Nav />
-          <Switch>
-            <Route exact path='/' render={ () => <PhotoContainer data={this.state.sunsetsPhotos}/>}/>
-            <Route path='/sunsets' render={ () => <PhotoContainer data={this.state.sunsetsPhotos}/>}/>
-            <Route path='/waterfalls' render={ () => <PhotoContainer data={this.state.waterfallsPhotos}/>}/>
-            <Route path='/mountains' render={ () => <PhotoContainer data={this.state.mountainsPhotos}/>}/>
-            <Route path='/search/:query' render={ () => <PhotoContainer data={this.state.photos}/>}/>
-          </Switch>
-        </div>
-      </BrowserRouter>
+      <div className="App">
+        <SearchForm onSearch={this.performSearch}/>
+        <Nav />
+        <Switch>
+          <Route exact path='/' render={ () => <PhotoContainer data={this.state.sunsetsPhotos}/>}/>
+          <Route path='/sunsets' render={ () => <PhotoContainer data={this.state.sunsetsPhotos}/>}/>
+          <Route path='/waterfalls' render={ () => <PhotoContainer data={this.state.waterfallsPhotos}/>}/>
+          <Route path='/mountains' render={ () => <PhotoContainer data={this.state.mountainsPhotos}/>}/>
+          <Route path='/search/:query' render={ () => <PhotoContainer data={this.state.photos} onSearch={this.performSearch}/>}/>
+        </Switch>
+      </div>
     );
   }
 }
 
-export default App;
+export default withRouter(App);
