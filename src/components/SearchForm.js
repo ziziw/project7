@@ -11,17 +11,17 @@ class SearchForm extends Component{
     }
   }
 
+  //update the state as the user types.
   onSearchChange = event => {
     this.setState({ searchText: event.target.value })
   }
 
+  //update the path URL and call performSearch passed as props.
   handleSubmit = event => {
     event.preventDefault();
 
     let path = `/search/${this.query.value}`;
-
     this.props.history.push(path);
-
     this.props.onSearch(this.query.value);
 
     event.currentTarget.reset();

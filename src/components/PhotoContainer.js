@@ -19,6 +19,7 @@ class PhotoContainer extends Component {
       photos = <NotFound />
     }
 
+    //Define the word used in the message.
     let word = 'Sunsets';
     let pathname = this.props.location.pathname;
 
@@ -30,6 +31,7 @@ class PhotoContainer extends Component {
       }
     }
 
+    //Display the message if there is at least 1 photo.
     let message = ''
     if (results.length > 0) {
       message = <h2>Images Of: {word}</h2>
@@ -39,6 +41,7 @@ class PhotoContainer extends Component {
       <div className="photo-container">
         {message}
         {
+          //display the loading message if the state loading is true.
           (this.props.loadingState)
             ? <p>Loading...</p>
             : <ul>{photos}</ul>

@@ -26,6 +26,7 @@ class App extends Component {
     }
   }
 
+  //When the component mounts, request datas for the three main subjects. 
   componentDidMount(){
     this.requestAll()
   }
@@ -35,6 +36,7 @@ class App extends Component {
     let pathname = this.props.location.pathname;
     let searchTerm;
 
+    //back and forward buttons functionality.
     if (pathname.includes('/search')){
       searchTerm = pathname.substring(8);
       if (prevPathname !== pathname){
